@@ -22,7 +22,7 @@ class AddressBook():
         for prop in properties:
             values[prop] = input(prop.title())
 
-        contact = Entry(values)
+        contact = Entry(**values)
         self.db.save(contact)
         self.entries.append(contact)
         self.index.add_entry(contact)

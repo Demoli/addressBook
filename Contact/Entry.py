@@ -1,12 +1,17 @@
 class Entry():
 
-    def __init__(self, data={}):
-        if (len(data)):
-            if 'id' in data:
-                self._id = data['id']
+    def __init__(self, **kwargs):
+        self._id = None
+        self._name = None
+        self._telephone = None
 
-            self._name = data['name']
-            self._telephone = data['telephone']
+        self.set_data(**kwargs)
+        # if (len(data)):
+        #     if 'id' in data:
+        #         self._id = data['id']
+        #
+        #     self._name = data['name']
+        #     self._telephone = data['telephone']
 
     def set_id(self, id):
         self._id = id
@@ -35,3 +40,11 @@ class Entry():
             'name': self.get_name(),
             'telephone': self.get_telephone()
         }
+
+    def set_data(self, **kwargs):
+        for key, value in kwargs.items():
+            try:
+                getattr(self,'set_' + key)(value)
+            except AttributeError as err:
+                pass
+

@@ -30,7 +30,8 @@ class Db():
         result = self.conn.execute(query, (id,))
         data = result.fetchone()
         if (data is not None):
-            entry.set_id(data['id']).set_name(data['name']).set_telephone(data['telephone']);
+            data = dict(zip(data.keys(), data))
+            entry.set_data(**data)
 
         return entry;
 
