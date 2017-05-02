@@ -1,0 +1,54 @@
+<RootWidget>
+    orientation:'vertical'
+    size_hint_x: 1
+    width: 100
+    screen_manager: address_book_screen_manager
+    MenuBar:
+    AddressBookScreenManager:
+        id: address_book_screen_manager
+
+<AddressBookScreenManager>
+
+    WelcomeScreen:
+
+    NewEntryScreen:
+
+    ListEntryScreen:
+
+    SearchEntryScreen:
+
+<MenuBar>
+    pos_hint: {'top':1}
+    size_hint_x: 1
+    ActionView:
+        ActionPrevious:
+        ActionButton:
+            text: 'Add New Entry'
+            on_release: app.root.screen_manager.current = 'new_entry'
+        ActionButton:
+            text: 'List Entries'
+            on_release: app.root.screen_manager.current = 'list_entry'
+        ActionButton:
+            text: 'Search Entries'
+            on_release: app.root.screen_manager.current = 'search_entry'
+
+
+<WelcomeScreen>
+    name: 'welcome'
+    Label:
+        text: 'Hello'
+
+<NewEntryScreen>:
+    name: 'new_entry'
+    Label:
+        text:'new entry'
+
+<ListEntryScreen>:
+    name: 'list_entry'
+    Label:
+        text:'list entry'
+
+<SearchEntryScreen>:
+    name:'search_entry'
+    Label:
+        text:'search entry'
