@@ -41,6 +41,10 @@ class DataGrid(GridLayout):
         action_button = Button(text='Edit')
         self.add_widget(action_button)
 
+    def reset(self):
+        if(len(self.children) > self.cols):
+            for child in self.children[:-self.cols]:
+                self.remove_widget(child)
 
 class WelcomeScreen(Screen):
     pass
@@ -55,6 +59,9 @@ class ListEntryScreen(Screen):
 
     def on_enter(self, *args):
         super().on_enter(*args)
+
+        self.data_grid.reset()
+
         address_book = App.get_running_app().address_book;
 
         data = address_book.get_entries();
