@@ -11,7 +11,7 @@
 
     WelcomeScreen:
 
-    NewEntryScreen:
+    EntryScreen:
 
     ListEntryScreen:
 
@@ -38,17 +38,60 @@
     Label:
         text: 'Hello'
 
-<NewEntryScreen>:
+<EntryScreen>:
     name: 'new_entry'
-    Label:
-        text:'new entry'
+    EntryForm:
 
 <ListEntryScreen>:
     name: 'list_entry'
-    Label:
-        text:'list entry'
+    data_grid: list_data_grid
+    DataGrid:
+        id:list_data_grid
 
 <SearchEntryScreen>:
     name:'search_entry'
     Label:
         text:'search entry'
+
+<DataGrid>
+    cols: 4
+    pos_hint: {'top':1}
+    size_hint_y: .5
+    Label:
+        text: 'Id'
+    Label:
+        text: 'Name'
+    Label:
+        text: 'Telephone'
+    Label:
+        text: 'Action'
+
+<EntryForm>
+    orientation: 'vertical'
+    font_size: 20
+    pos_hint: {'top':1}
+    size_hint_y: None
+
+    GridLayout:
+        cols:2
+        Label:
+            font_size: self.parent.parent.font_size
+            text: 'Name:'
+            size_hint_x: .25
+        TextInput:
+            text: self.parent.parent.name
+            font_size: self.parent.parent.font_size
+            on_text: self.parent.parent.name = self.text
+    GridLayout:
+        cols:2
+        Label:
+            font_size: self.parent.parent.font_size
+            text: 'Telephone:'
+            size_hint_x: .25
+        TextInput:
+            text: self.parent.parent.telephone
+            font_size: self.parent.parent.font_size
+            on_text: self.parent.parent.telephone = self.text
+    Button:
+        text: 'Save'
+        on_release: self.parent.save()

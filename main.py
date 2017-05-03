@@ -2,48 +2,83 @@ from Contact.AddressBook import AddressBook
 
 from kivy.app import App, Widget
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.actionbar import ActionBar
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty
+
 
 class RootWidget(BoxLayout):
     screen_manager = ObjectProperty(None)
 
+
 class AddressBookScreenManager(ScreenManager):
     pass
 
+
 class AddressBookApp(App):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.address_book = AddressBook();
 
     def build(self):
         return RootWidget()
 
+
 class MenuBar(ActionBar):
+    pass
 
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+class DataGrid(GridLayout):
+    def add_row(self, data):
+        for item in data:
+            col_label = Label(text=str(item))
+            self.add_widget(col_label)
 
-    def new_entry(self):
-        self.screen_manager.current = 'new_entry'
-
-    def list_entries(self):
-        self.screen_manager.current = 'list_entry'
-
-    def search_entries(self):
-        self.screen_manager.current = 'search_entry'
+        action_button = Button(text='Edit')
+        self.add_widget(action_button)
 
 
 class WelcomeScreen(Screen):
     pass
 
-class NewEntryScreen(Screen):
+
+class EntryScreen(Screen):
     pass
 
+
 class ListEntryScreen(Screen):
-    pass
+    data_grid = ObjectProperty(None)
+
+    def on_enter(self, *args):
+        super().on_enter(*args)
+        address_book = App.get_running_app().address_book;
+
+        data = address_book.get_entries();
+        for row in data:
+            self.data_grid.add_row(row.get_data().values())
+
 
 class SearchEntryScreen(Screen):
     pass
+
+
+class EntryForm(BoxLayout):
+    entry_id = NumericProperty(None)
+    name = StringProperty('')
+    telephone = StringProperty('')
+
+    def save(self):
+        properties = {
+            'name': self.name,
+            'telephone': self.telephone
+        }
+        address_book = App.get_running_app().address_book;
+        address_book.add_entry(**properties);
+
 
 if __name__ == '__main__':
     AddressBookApp().run()

@@ -14,15 +14,15 @@ class AddressBook():
         self.reindex()
         self.entries = []
 
-    def add_entry(self):
-        properties = [
-            'name', 'telephone'
-        ]
-        values = {}
-        for prop in properties:
-            values[prop] = input(prop.title())
+    def add_entry(self, **kwargs):
+        # properties = [
+        #     'name', 'telephone'
+        # ]
+        # values = {}
+        # for prop in properties:
+        #     values[prop] = input(prop.title())
 
-        contact = Entry(**values)
+        contact = Entry(**kwargs)
         self.db.save(contact)
         self.entries.append(contact)
         self.index.add_entry(contact)
