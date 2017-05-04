@@ -1,9 +1,7 @@
 from Contact.Entry import Entry
 from Contact.Index import Index
 from Contact.Db import Db
-import uuid
-import os
-import glob
+from operator import itemgetter
 
 class AddressBook():
     data_path = './data/'
@@ -40,7 +38,8 @@ class AddressBook():
         if len(results):
             for index in results:
                 entries.append(self.__load_entry(index['_id']))
-        return entries
+
+        return self.__sort_entries(entries)
 
     def reindex(self):
         index_data = []
@@ -64,6 +63,10 @@ class AddressBook():
             if(entry.get_id()):
                 entries.append(entry)
 
+        return self.__sort_entries(entries)
+
+    def __sort_entries(self, entries):
+        entries.sort(key=lambda x: x.get_id())
         return entries
 
     def __load_entry(self, id):

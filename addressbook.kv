@@ -52,8 +52,21 @@
 
 <SearchEntryScreen>:
     name:'search_entry'
-    Label:
-        text:'search entry'
+    data_grid: search_data_grid
+    StackLayout:
+        GridLayout:
+            cols:2
+            pos_hint: {'top':1}
+            size_hint_y: .10
+            Label:
+                text: 'Search'
+                size_hint_x: .25
+            TextInput:
+                pos_hint: {'top':1}
+                size_hint_y: .1
+                on_text: self.parent.parent.parent.search(self.text)
+        DataGrid:
+            id:search_data_grid
 
 <DataGrid>
     cols: 4

@@ -89,8 +89,23 @@ class ListEntryScreen(Screen):
 
 
 class SearchEntryScreen(Screen):
-    pass
+    data_grid = ObjectProperty(None)
 
+    def on_enter(self, *args):
+        super().on_enter(*args)
+
+        self.data_grid.reset()
+
+    def search(self, term):
+        if len(term) >= 3:
+            self.data_grid.reset()
+            address_book = App.get_running_app().address_book;
+
+            data = address_book.search(term);
+            for row in data:
+                self.data_grid.add_row(row.get_data())
+        else:
+            self.data_grid.reset()
 
 class EntryForm(BoxLayout):
     entry_id = NumericProperty(1)
