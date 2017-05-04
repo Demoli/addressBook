@@ -44,7 +44,7 @@ class Index():
 
     def get_entries(self):
         ids = []
-        result = self.es.search(self.es_index_name, self.es_doc_type, {"query": {"match_all": {}}})
+        result = self.es.search(self.es_index_name, self.es_doc_type, {'size': 100, "query": {"match_all": {}}})
         for result in result['hits']['hits']:
             ids.append(result['_id'])
 

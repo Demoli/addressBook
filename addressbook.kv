@@ -1,0 +1,112 @@
+<RootWidget>
+    orientation:'vertical'
+    size_hint_x: 1
+    width: 100
+    screen_manager: address_book_screen_manager
+    MenuBar:
+    AddressBookScreenManager:
+        id: address_book_screen_manager
+
+<AddressBookScreenManager>
+
+    WelcomeScreen:
+
+    EntryScreen:
+        id: entry_screen
+
+    ListEntryScreen:
+
+    SearchEntryScreen:
+
+<MenuBar>
+    pos_hint: {'top':1}
+    size_hint_x: 1
+    ActionView:
+        ActionPrevious:
+        ActionButton:
+            text: 'Add New Entry'
+            on_release: app.root.screen_manager.current = 'edit_entry'
+        ActionButton:
+            text: 'List Entries'
+            on_release: app.root.screen_manager.current = 'list_entry'
+        ActionButton:
+            text: 'Search Entries'
+            on_release: app.root.screen_manager.current = 'search_entry'
+
+
+<WelcomeScreen>
+    name: 'welcome'
+    Label:
+        text: 'Hello'
+
+<EntryScreen>:
+    name: 'edit_entry'
+    EntryForm:
+        id: entry_form
+
+<ListEntryScreen>:
+    name: 'list_entry'
+    data_grid: list_data_grid
+    DataGrid:
+        id:list_data_grid
+
+<SearchEntryScreen>:
+    name:'search_entry'
+    data_grid: search_data_grid
+    StackLayout:
+        GridLayout:
+            cols:2
+            pos_hint: {'top':1}
+            size_hint_y: .10
+            Label:
+                text: 'Search'
+                size_hint_x: .25
+            TextInput:
+                pos_hint: {'top':1}
+                size_hint_y: .1
+                on_text: self.parent.parent.parent.search(self.text)
+        DataGrid:
+            id:search_data_grid
+
+<DataGrid>
+    cols: 4
+    pos_hint: {'top':1}
+    size_hint_y: .5
+    Label:
+        text: 'Id'
+    Label:
+        text: 'Name'
+    Label:
+        text: 'Telephone'
+    Label:
+        text: 'Action'
+
+<EntryForm>
+    orientation: 'vertical'
+    font_size: 20
+    pos_hint: {'top':1}
+    size_hint_y: None
+
+    GridLayout:
+        cols:2
+        Label:
+            font_size: self.parent.parent.font_size
+            text: 'Name:'
+            size_hint_x: .25
+        TextInput:
+            text: self.parent.parent.name
+            font_size: self.parent.parent.font_size
+            on_text: self.parent.parent.name = self.text
+    GridLayout:
+        cols:2
+        Label:
+            font_size: self.parent.parent.font_size
+            text: 'Telephone:'
+            size_hint_x: .25
+        TextInput:
+            text: self.parent.parent.telephone
+            font_size: self.parent.parent.font_size
+            on_text: self.parent.parent.telephone = self.text
+    Button:
+        text: 'Save'
+        on_release: self.parent.save()
