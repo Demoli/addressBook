@@ -28,6 +28,10 @@ class AddressBook():
         self.index.add_entry(contact)
         pass
 
+    def save_entry(self, entry):
+        self.db.save(entry);
+        self.reindex()
+
     def search(self, term):
         term = term.lower()
         results = self.index.search(term)
@@ -49,6 +53,9 @@ class AddressBook():
 
         if(len(index_data)):
             self.index.reindex(index_data)
+
+    def get_entry(self, id):
+        return self.__load_entry(id);
 
     def get_entries(self):
         entries = [];

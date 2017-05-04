@@ -17,12 +17,29 @@ class Db():
         self.conn.execute(query)
 
     def save(self, entry):
+        if(entry.get_id()):
+            result = self.update(entry)
+        else:
+            result = self.insert(entry)
+        return result;
+
+    def insert(self, entry):
         query = """INSERT INTO entry (id, name, telephone) VALUES(null, ?,?)
-        """
+                """
         result = self.conn.execute(query, [entry.get_name(), entry.get_telephone()])
         self.conn.commit()
         entry.set_id(result.lastrowid)
-        return result;
+        return result
+
+    def update(self, entry):
+        query = """UPDATE entry set
+                    name = ?,
+                    telephone = ?
+                    WHERE ID = ?
+                """
+        result = self.conn.execute(query, [entry.get_name(), entry.get_telephone(), entry.get_id()])
+        self.conn.commit()
+        return result
 
     def load(self, entry, id):
         query = """select * from entry where id = ?

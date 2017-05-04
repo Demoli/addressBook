@@ -12,6 +12,7 @@
     WelcomeScreen:
 
     EntryScreen:
+        id: entry_screen
 
     ListEntryScreen:
 
@@ -24,7 +25,7 @@
         ActionPrevious:
         ActionButton:
             text: 'Add New Entry'
-            on_release: app.root.screen_manager.current = 'new_entry'
+            on_release: app.root.screen_manager.current = 'edit_entry'
         ActionButton:
             text: 'List Entries'
             on_release: app.root.screen_manager.current = 'list_entry'
@@ -39,8 +40,9 @@
         text: 'Hello'
 
 <EntryScreen>:
-    name: 'new_entry'
+    name: 'edit_entry'
     EntryForm:
+        id: entry_form
 
 <ListEntryScreen>:
     name: 'list_entry'
